@@ -1,0 +1,52 @@
+<html>
+    <head>
+      <script src="https://cdn.tailwindcss.com"></script> 
+      <script>
+        
+       function deleteEmployee(id){
+        fetch(`/employee/${id}`,{
+          method:"delete",
+          headers: {"Content-Type":"application/json"},
+          body:JSON.stringify({
+              id:id
+            })
+
+        })
+        .then((res) =>{
+          if(res.ok){
+            window.location.reload();
+          }
+        })
+        .catch((err) => console.error(err));
+       }
+
+      </script>
+    </head>
+    <body class="bg-violet-500">
+      
+      <center><h1 class="text-3xl font-semibold text-white-600 uppercase underline">Company details</h1></center>
+        <div style="float: right; width: 30%">
+            <a href="new-employee" class="ml-20 border-gray-600">
+                <button class="rounded bg-orange-800 h-10 px-5 mt-2 text-2xl text-white " >Add Employee Details</button>
+            </a>
+
+        </div>
+      
+     <center>
+      <div>
+      <ul class="list-none">
+        <h1 class="px-20 text-xl py-4 ml-5 font-bold uppercase text-white">All Employees:</h1>
+          <% for(var i=0;i<data.length;i++){ %>
+           <li>
+             <label class="text-xl text-white"><%= data[i].name %></label>
+             <button   name="view" class="bg-orange-800 hover:bg-green-800 text-xl ml-5 rounded px-5 py-2 text-white" onclick="window.location.href='/get-employee/<%= data[i].id %>';">View</button>
+             <button type="delete" onclick="deleteEmployee(<%= data[i].id%>)" class="bg-orange-800 hover:bg-green-800 text-xl ml-5 rounded px-5 py-2 text-white">Delete</button>
+           </li>
+           <% } %>
+            
+      </ul>  
+     </div></center>
+      
+    </body>
+</html>
+ 
